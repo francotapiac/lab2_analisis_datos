@@ -47,6 +47,12 @@ hepatitis$PROTIME[is.na(hepatitis$PROTIME)] <- 0
 
 hepatitis <- scale(hepatitis)
 
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+
+
+
 ############################## Parte 3:Analizando los datos ##############################
 
 
@@ -63,13 +69,13 @@ fviz_nbclust(hepatitis,kmeans,method = "gap_stat")
 resnumclust <- NbClust(hepatitis,distance="euclidean",min.nc=2,max.nc=10,method="kmeans")
 fviz_nbclust(resnumclust)
 
-g.dist = daisy(hepatitis, metric="gower", type=list(logratio=2))
+#g.dist = daisy(hepatitis, metric="gower", type=list(logratio=2))
 ############################## Parte 4: Obteniendo k-media ##############################
 #Escalado de las variables
 #hepatitis <- as.data.frame(scale(hepatitis[,1:18]))
 
 #hepatitis.sin.acceso.nulo <- na.omit(hepatitis) #Eliminación de cada fila con uno o más atributos NA
-kmedia.contenido <- kmeans(hepatitis,2)
+kmedia.contenido <- kmeans(hepatitis,3)
 
 ############################## Parte 5: Gráficando resultWados ##############################
 clusplot(hepatitis, kmedia.contenido$cluster)
